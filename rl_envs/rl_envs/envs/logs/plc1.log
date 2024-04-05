@@ -1,0 +1,985 @@
+DEBUG get_query: SELECT value FROM swat_s1 WHERE name = ? AND pid = ?
+DEBUG set_query: UPDATE swat_s1 SET value = ? WHERE name = ? AND pid = ?
+DEBUG EnipProtocol server addr:  192.168.1.10
+DEBUG: concatenating server address with default port.
+DEBUG enip _start_server cmd:  ['/home/robbiemcgugan/anaconda3/envs/venv/bin/python', '-m', 'cpppo.server.enip', '--no-print', '--log', 'logs/protocols_tests_enip_server', '--address', '192.168.1.10:44818', 'FIT101:1=REAL', 'MV101:1=INT', 'LIT101:1=REAL', 'P101:1=INT', 'FIT201:1=REAL', 'MV201:1=INT', 'LIT301:1=REAL']
+DEBUG: swat-s1 plc1 enters pre_loop
+DEBUG: swat-s1 plc1 enters main_loop.
+DEBUG plc1 lit101: 0.82833
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+DEBUG PLC1 - receive fit201: 0.000000
+DEBUG PLC1 - receive lit301: 0.500000
+DEBUG plc1 lit101: 0.83778
+INFO PLC1 - lit101 over H -> close mv101.
+Traceback (most recent call last):
+  File "/home/robbiemcgugan/anaconda3/envs/venv/lib/python3.9/runpy.py", line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/robbiemcgugan/anaconda3/envs/venv/lib/python3.9/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/home/robbiemcgugan/anaconda3/envs/venv/lib/python3.9/site-packages/cpppo/server/enip/client.py", line 2248, in <module>
+    sys.exit( main() )
+  File "/home/robbiemcgugan/anaconda3/envs/venv/lib/python3.9/site-packages/cpppo/server/enip/client.py", line 2177, in main
+    with connector_cls( host=addr[0], port=addr[1], timeout=timeout, profiler=profiler,
+  File "/home/robbiemcgugan/anaconda3/envs/venv/lib/python3.9/site-packages/cpppo/server/enip/client.py", line 1250, in __init__
+    super( connector, self ).__init__( host=host, port=port, timeout=timeout, **kwds )
+  File "/home/robbiemcgugan/anaconda3/envs/venv/lib/python3.9/site-packages/cpppo/server/enip/client.py", line 436, in __init__
+    self.conn		= socket.create_connection( self.addr, timeout=timeout )
+  File "/home/robbiemcgugan/anaconda3/envs/venv/lib/python3.9/socket.py", line 844, in create_connection
+    raise err
+  File "/home/robbiemcgugan/anaconda3/envs/venv/lib/python3.9/socket.py", line 832, in create_connection
+    sock.connect(sa)
+OSError: [Errno 101] Network is unreachable
+Traceback (most recent call last):
+  File "/home/robbiemcgugan/Documents/Y5/new/rl_envs/rl_envs/envs/plc1.py", line 113, in <module>
+    plc1 = SwatPLC1(
+  File "/home/robbiemcgugan/anaconda3/envs/venv/lib/python3.9/site-packages/minicps-1.1.4-py3.9.egg/minicps/devices.py", line 98, in __init__
+    self._start()
+  File "/home/robbiemcgugan/anaconda3/envs/venv/lib/python3.9/site-packages/minicps-1.1.4-py3.9.egg/minicps/devices.py", line 315, in _start
+    self.main_loop()
+  File "/home/robbiemcgugan/Documents/Y5/new/rl_envs/rl_envs/envs/plc1.py", line 82, in main_loop
+    fit201 = float(self.receive(FIT201_2, PLC2_ADDR))
+ValueError: could not convert string to float: "b'"

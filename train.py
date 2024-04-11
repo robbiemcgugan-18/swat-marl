@@ -11,25 +11,25 @@ def create_env(env_config={}):
     return MultiAgentSwatEnv()
 
 def main():
-    env = create_env()
+    # env = create_env()
 
     # env.swat_s1_cps.adjust_latency('plc1', 's1', 500)
 
-    env.cli()
-    # checkpoint_root = "tmp/ppo/mininet_env"
-    # shutil.rmtree(checkpoint_root, ignore_errors=True, onerror=None)
+    # env.cli()
+    checkpoint_root = "tmp/ppo/mininet_env"
+    shutil.rmtree(checkpoint_root, ignore_errors=True, onerror=None)
 
-    # ray_results = "{}/Documents/Y5/new/ray_results/".format(os.getenv("HOME"))
-    # shutil.rmtree(ray_results, ignore_errors=True, onerror=None)
+    ray_results = "{}/Documents/Y5/new/ray_results/".format(os.getenv("HOME"))
+    shutil.rmtree(ray_results, ignore_errors=True, onerror=None)
 
-    # ray.init(ignore_reinit_error=True)
-    # tune.register_env("swat_env-v0", create_env)
+    ray.init(ignore_reinit_error=True)
+    tune.register_env("swat_env-v0", create_env)
 
-    # config = DQNConfig()
-    # config = config.training(num_atoms=tune.grid_search([1,]))
-    # config = config.environment("swat_env-v0")
+    config = DQNConfig()
+    config = config.training(num_atoms=tune.grid_search([1,]))
+    config = config.environment("swat_env-v0")
 
-    # tune.Tuner("DQN", run_config=air.RunConfig(stop={"training_iteration": 20}), param_space=config.to_dict(), ).fit()
+    tune.Tuner("DQN", run_config=air.RunConfig(stop={"training_iteration": 20}), param_space=config.to_dict(), ).fit()
 
     # tune.run("PPO", config={"env": "mininet_env-v0"}, stop={"training_iteration": 10})
     # select_env = "mininet_env-v0"

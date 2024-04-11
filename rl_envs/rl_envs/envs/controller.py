@@ -62,7 +62,7 @@ def aggregate_port_stats(port_stats):
     # Aggregate port stats here
     aggregated_stats = {
         'collisions': np.mean([v['collisions'] for v in port_stats.values()]),
-        'rx_bytes': np.sum([v['rx_bytes'] for v in port_stats.values()]),
+        'rx_bytes': np.array([np.sum([v['rx_bytes'] for v in port_stats.values()])]),
         'rx_dropped': np.sum([v['rx_dropped'] for v in port_stats.values()]),
         'rx_errors': np.sum([v['rx_errors'] for v in port_stats.values()]),
         'rx_packets': np.sum([v['rx_packets'] for v in port_stats.values()]),

@@ -9,3 +9,8 @@ register(
     id='swat_env-v0',
     entry_point='rl_envs.envs:SwatEnv',
 )
+
+register(
+    id='ma_swat_env-v0',
+    entry_point='rl_envs.envs:MultiAgentSwatEnv',
+)

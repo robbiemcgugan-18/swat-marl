@@ -40,53 +40,49 @@ def get_network_stats(port_no):
         'global': global_stats
     }
 
-    print(stats)
-    # Usage
-    stats = convert_types(stats)
-
     return jsonify(stats)
 
-def convert_types(obj):
-    if isinstance(obj, np.integer):
-        return int(obj)
-    elif isinstance(obj, np.floating):
-        return float(obj)
-    elif isinstance(obj, dict):
-        return {k: convert_types(v) for k, v in obj.items()}
-    elif isinstance(obj, list):
-        return [convert_types(item) for item in obj]
-    else:
-        return obj
+@app.route('/network/global_stats', methods=['GET'])
+def get_global_stats():
+    # Global stats
+    global_stats = {
+        'port': aggregate_port_stats(network_stats['ports']),
+        'flow': aggregate_flow_stats(network_stats['flows']),
+        'tables': aggregate_table_stats(network_stats['tables']),
+        'window': aggregate_window_stats(network_stats['port_packet_window'])
+    }
+
+    return jsonify(global_stats)
 
 def aggregate_port_stats(port_stats):
     # Aggregate port stats here
     aggregated_stats = {
-        'collisions': np.mean([v['collisions'] for v in port_stats.values()]),
-        'rx_bytes': np.array([np.sum([v['rx_bytes'] for v in port_stats.values()])]),
-        'rx_dropped': np.sum([v['rx_dropped'] for v in port_stats.values()]),
-        'rx_errors': np.sum([v['rx_errors'] for v in port_stats.values()]),
-        'rx_packets': np.sum([v['rx_packets'] for v in port_stats.values()]),
-        'tx_errors': np.sum([v['tx_errors'] for v in port_stats.values()]),
-        'tx_packets': np.sum([v['tx_packets'] for v in port_stats.values()]),
+        'collisions': int(np.mean([v['collisions'] for v in port_stats.values()])),
+        'rx_bytes': int(np.sum([v['rx_bytes'] for v in port_stats.values()])),
+        'rx_dropped': int(np.sum([v['rx_dropped'] for v in port_stats.values()])),
+        'rx_errors': int(np.sum([v['rx_errors'] for v in port_stats.values()])),
+        'rx_packets': int(np.sum([v['rx_packets'] for v in port_stats.values()])),
+        'tx_errors': int(np.sum([v['tx_errors'] for v in port_stats.values()])),
+        'tx_packets': int(np.sum([v['tx_packets'] for v in port_stats.values()])),
     }
     return aggregated_stats
 
 def aggregate_flow_stats(flow_stats):
     # Aggregate flow stats here
     aggregated_stats = {
-        'byte_count': np.sum([v['byte_count'] for v in flow_stats.values()]),
-        'duration_nsec': np.mean([v['duration_nsec'] for v in flow_stats.values()]),
-        'duration_sec': np.mean([v['duration_sec'] for v in flow_stats.values()]),
-        'packet_count': np.sum([v['packet_count'] for v in flow_stats.values()]),
+        'byte_count': int(np.sum([v['byte_count'] for v in flow_stats.values()])),
+        'duration_nsec': float(np.mean([v['duration_nsec'] for v in flow_stats.values()])),
+        'duration_sec': float(np.mean([v['duration_sec'] for v in flow_stats.values()])),
+        'packet_count': int(np.sum([v['packet_count'] for v in flow_stats.values()])),
     }
     return aggregated_stats
 
 def aggregate_table_stats(table_stats):
     # Aggregate table stats here
     aggregated_stats = {
-        'active_count': np.sum([v['active_count'] for v in table_stats.values()]),
-        'lookup_count': np.sum([v['lookup_count'] for v in table_stats.values()]),
-        'matched_count': np.sum([v['matched_count'] for v in table_stats.values()]),
+        'active_count': int(np.sum([v['active_count'] for v in table_stats.values()])),
+        'lookup_count': int(np.sum([v['lookup_count'] for v in table_stats.values()])),
+        'matched_count': int(np.sum([v['matched_count'] for v in table_stats.values()])),
     }
     return aggregated_stats
 
@@ -100,10 +96,11 @@ def aggregate_queue_stats(queue_stats):
 def aggregate_window_stats(window_stats):
     # Aggregate window stats here
     aggregated_stats = {
-        'average': np.mean([v['average'] for v in window_stats.values()]),
-        'max': np.max([v['max'] for v in window_stats.values()]),
-        'min': np.min([v['min'] for v in window_stats.values()]),
+        'average': float(np.mean([v['average'] for v in window_stats.values()])),
+        'max': float(np.max([v['max'] for v in window_stats.values()])),
+        'min': float(np.min([v['min'] for v in window_stats.values()])),
     }
+    print(aggregated_stats)
     return aggregated_stats
 
 
@@ -237,6 +234,29 @@ class NetworkStatsCollector(app_manager.RyuApp):
                 "tx_packets": stat.tx_packets,
                 "tx_errors": stat.tx_errors,
             }
+
+    def limit_rate_all_ports(self, datapath, rate):
+        """Limit the rate of packets on all ports on a specific switch."""
+        ofp = datapath.ofproto
+        ofp_parser = datapath.ofproto_parser
+
+        # Add a meter to limit the rate of packets
+        meter_mod = ofp_parser.OFPMeterMod(datapath=datapath, command=ofp.OFPMC_ADD,
+                                            flags=ofp.OFPMF_KBPS, meter_id=1,
+                                            bands=[ofp_parser.OFPMeterBandDrop(rate=rate, burst_size=10)])
+        datapath.send_msg(meter_mod)
+
+        # Get list of all ports on the switch
+        ports = datapath.ports
+
+        for port_no in ports:
+            # Add a flow rule that uses the meter for each port
+            match = ofp_parser.OFPMatch(in_port=port_no)
+            actions = [ofp_parser.OFPActionOutput(ofp.OFPP_CONTROLLER)]
+            inst = [ofp_parser.OFPInstructionMeter(meter_id=1),
+                    ofp_parser.OFPInstructionActions(ofp.OFPIT_APPLY_ACTIONS, actions)]
+            mod = ofp_parser.OFPFlowMod(datapath=datapath, priority=1, match=match, instructions=inst)
+            datapath.send_msg(mod)
 
 
 

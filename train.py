@@ -1,4 +1,5 @@
 from rl_envs.envs.ma_gym_env import MultiAgentSwatEnv
+from rl_envs.envs.gym_env import SwatEnv
 from ray.tune.registry import register_env
 import gymnasium as gym
 import os
@@ -10,10 +11,11 @@ from ray import tune, air
 def create_env(env_config={}):
     return MultiAgentSwatEnv()
 
-def main():
-    # env = create_env()
+def create_single_env(env_config={}):
+    return SwatEnv(30)
 
-    # env.swat_s1_cps.adjust_latency('plc1', 's1', 500)
+def main():
+    # env = create_single_env()
 
     # env.cli()
     checkpoint_root = "tmp/ppo/mininet_env"
@@ -23,7 +25,7 @@ def main():
     shutil.rmtree(ray_results, ignore_errors=True, onerror=None)
 
     ray.init(ignore_reinit_error=True)
-    tune.register_env("swat_env-v0", create_env)
+    tune.register_env("swat_env-v0", create_single_env)
 
     config = DQNConfig()
     config = config.training(num_atoms=tune.grid_search([1,]))

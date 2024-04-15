@@ -5,7 +5,7 @@ swat-s1 run.py
 from mininet.net import Mininet
 from mininet.cli import CLI
 from minicps.mcps import MiniCPS
-from mininet.node import OVSController
+from mininet.node import OVSController, RemoteController
 
 from .topo import SwatTopo
 
@@ -38,31 +38,26 @@ class SwatS1CPS(MiniCPS):
         # SPHINX_SWAT_TUTORIAL RUN)
         # CLI(self.net)
 
-        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=1,actions=output:2,3,4')
-        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=2,actions=output:1,3,4')
-        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=3,actions=output:1,2,4')
-        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=4,actions=output:1,2,3')
+        plc1.cmd('tc qdisc add dev %s-eth0 root handle 1: htb default 12' % 'plc1')
+        plc2.cmd('tc qdisc add dev %s-eth0 root handle 1: htb default 12' % 'plc2')
+        plc3.cmd('tc qdisc add dev %s-eth0 root handle 1: htb default 12' % 'plc3')
 
-        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=1,actions=output:2,3,4')
-        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=2,actions=output:1,3,4')
-        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=3,actions=output:1,2,4')
-        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=4,actions=output:1,2,3')
+        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=1,actions=output:2,3,4,5')
+        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=2,actions=output:1,3,4,5')
+        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=3,actions=output:1,2,4,5')
+        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=4,actions=output:1,2,3,5')
+        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=5,actions=output:1,2,3,4')
 
-    def adjust_bandwidth(self, host_name, interface_name, bandwidth):
-        """Adjust the bandwidth of a specific interface on a specific host."""
-        host = self.net.get(host_name)
-        host.cmd('tc qdisc add dev {} root tbf rate {}mbit burst 32kbit latency 400ms'.format(interface_name, bandwidth))
-        print('tc qdisc add dev {} root tbf rate {}mbit burst 32kbit latency 400ms'.format(interface_name, bandwidth))
+        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=1,actions=output:2,3,4,5')
+        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=2,actions=output:1,3,4,5')
+        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=3,actions=output:1,2,4,5')
+        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=4,actions=output:1,2,3,5')
+        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=5,actions=output:1,2,3,4')
 
-    def adjust_latency(self, host_name, interface_name, latency):
-        """Adjust the latency of a specific interface on a specific host."""
-        host = self.net.get(host_name)
-        host.cmd('tc qdisc add dev {} root netem delay {}ms'.format(interface_name, latency))
-        result = host.cmd('ping plc2')
-        print(result)
+    def reset(self):
+        self.net.stop()
 
-    def adjust_packet_loss(self, host_name, interface_name, loss_rate):
-        """Adjust the packet loss rate of a specific interface on a specific host."""
-        host = self.net.get(host_name)
-        host.cmd('tc qdisc add dev {} root netem loss {}%'.format(interface_name, loss_rate))
+        self.net = Mininet(topo=self.TOPO, controller=self.controller)
+
+        self.net.start()
 

@@ -146,6 +146,7 @@ IP = {
     'plc5': '192.168.1.50',
     'plc6': '192.168.1.60',
     'attacker': '192.168.1.77',
+    'sources': '192.168.1.86'
 }
 
 NETMASK = '/24'
@@ -158,6 +159,7 @@ MAC = {
     'plc5': '00:1D:9C:C8:BC:2F',
     'plc6': '00:1D:9C:C7:FA:2D',
     'attacker': 'AA:AA:AA:AA:AA:AA',
+    'sources': 'AA:AA:AA:AA:AA:AB'
 }
 
 

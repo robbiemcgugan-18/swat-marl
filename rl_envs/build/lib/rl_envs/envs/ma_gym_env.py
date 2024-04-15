@@ -16,143 +16,125 @@ from mininet.cli import CLI
 import sys
 import subprocess
 
+import numpy as np
+
+
 class MultiAgentSwatEnv(MultiAgentEnv):
 
     def __init__(self):
         super().__init__()
 
-        print("STARTING MULTI AGENT SWAT ENVIRONMENT")
         self.controller = RemoteController(name='ryu', ip='127.0.0.1', port=5555)
 
         # Initialize the Mininet network
-        TOPO = SwatTopo()
-        NET = Mininet(topo=TOPO, controller=self.controller)
-        self.swat_s1_cps = SwatS1CPS(name='swat_s1', net=NET)
+        self.TOPO = SwatTopo()
+        net = Mininet(topo=self.TOPO, controller=self.controller)
 
-        self.agents = [SingleAgentSwatEnv(self.swat_s1_cps, i) for i in range(1,4)]
+        print("STARTING MULTI AGENT SWAT ENVIRONMENT")
+        self.swat_s1_cps = SwatS1CPS(name='swat_s1', net=net)
+
+        self.agents = [SingleAgentSwatEnv(self.swat_s1_cps, i, 30) for i in range(1,4)]
 
         self._agent_ids = set(range(3))
         self.terminateds = set()
         self.truncateds = set()
-        self.last_obs = {}
-        self.last_rew = {}
-        self.last_terminated = {}
-        self.last_info = {}
-        self.i = 0
-        self.num = 3
-        self.observation_space = Dict({
-            'local': Dict({
-                'port': Dict({
-                    'rx_packets': Discrete(1000),  # assuming max 1000 packets
-                    'tx_packets': Discrete(1000),
-                    'rx_bytes': Box(low=0, high=1e6, shape=(1,)),  # assuming max 1e6 bytes
-                    'tx_bytes': Box(low=0, high=1e6, shape=(1,)),
-                    'rx_errors': Discrete(100),
-                    'tx_errors': Discrete(100),
-                    'rx_dropped': Discrete(100),
-                    'tx_dropped': Discrete(100),
-                    'collisions': Discrete(10),
-                }),
-                'flow': Dict({
-                    'byte_count': Box(low=0, high=1e6, shape=(1,)),
-                    'packet_count': Discrete(1000),
-                    'duration_sec': Box(low=0, high=1000, shape=(1,)),
-                    'duration_nsec': Box(low=0, high=1e9, shape=(1,)),
-                }),
-                'table': Dict({
-                    'active_count': Discrete(10),
-                    'lookup_count': Discrete(1000),
-                    'matched_count': Discrete(1000),
-                }),
-                'window': Dict({
-                    'average': Box(low=0, high=1000, shape=(1,)),
-                    'max': Box(low=0, high=1000, shape=(1,)),
-                    'min': Box(low=0, high=1000, shape=(1,)),
-                }),
-            }),
-            'global': Dict({
-                'port': Dict({
-                    'rx_packets': Discrete(1000),
-                    'tx_packets': Discrete(1000),
-                    'rx_bytes': Box(low=0, high=1e6, shape=(1,)),
-                    'tx_bytes': Box(low=0, high=1e6, shape=(1,)),
-                    'rx_errors': Discrete(100),
-                    'tx_errors': Discrete(100),
-                    'rx_dropped': Discrete(100),
-                    'tx_dropped': Discrete(100),
-                    'collisions': Discrete(10),
-                }),
-                'flow': Dict({
-                    'byte_count': Box(low=0, high=1e6, shape=(1,)),
-                    'packet_count': Discrete(1000),
-                    'duration_sec': Box(low=0, high=1000, shape=(1,)),
-                    'duration_nsec': Box(low=0, high=1e9, shape=(1,)),
-                }),
-                'table': Dict({
-                    'active_count': Discrete(10),
-                    'lookup_count': Discrete(1000),
-                    'matched_count': Discrete(1000),
-                }),
-                'window': Dict({
-                    'average': Box(low=0, high=1000, shape=(1,)),
-                    'max': Box(low=0, high=1000, shape=(1,)),
-                    'min': Box(low=0, high=1000, shape=(1,)),
-                }),
-            }),
-        })
-        self.action_space = gym.spaces.Discrete(2)
+        self.resetted = False
+        self.operation_count = 0
+        self.attacked = False
+
+        # Define the observation space with an arbitrary high and low limit for simplicity
+        low_limits = np.full((31,), -np.inf)  # Assuming negative values are not expected, but setting to -inf for generalization
+        high_limits = np.full((31,), np.inf)  # Setting to inf to not limit the range artificially
+
+        self.observation_space = gym.spaces.Box(low=low_limits, high=high_limits, dtype=np.float32)
+        self.action_space = gym.spaces.Discrete(4)
+
+        self.setup_traffic()
 
     def reset(self, *, seed=None, options=None):
-        self.swat_s1_cps.net.stop()
-        TOPO =SwatTopo()
-        NET = Mininet(topo=TOPO, controller=self.controller)
-        self.swat_s1_cps = SwatS1CPS(name='swat_s1', net=NET)
         
+        if self.attacked:
+            self.stop_dos_attack('attacker')
+        self.resetted = True
         self.terminateds = set()
         self.truncateds = set()
-        self.last_obs = {}
-        self.last_rew = {}
-        self.last_terminated = {}
-        self.last_info = {}
-
-        self.i = 0
-        for i, a in enumerate(self.agents):
-            self.last_obs[i] = a.reset()
-            self.last_rew[i] = 0
-            self.last_terminated[i] = False
-            self.last_info[i] = {}
-
-        obs_dict = {self.i: self.last_obs[self.i]}
-        info_dict = {self.i: self.last_info[self.i]}
-        self.i = (self.i + 1) % len(self.agents)
-        return obs_dict, info_dict
+        self.info_dict = {}
+        self.operation_count = 0
+        self.attacked = False
+        return {i: a.reset() for i, a in enumerate(self.agents)}, self.info_dict
 
     def step(self, action_dict):
-        assert len(self.terminateds) != len(self.agents)
+        obs, rew, terminated, trunc, info = {}, {}, {}, {}, {}
+
+        if self.is_attack_time():
+            self.generate_dos_attack('sources', 'plc1')
+            self.generate_dos_attack('sources', 'plc2')
+            self.generate_dos_attack('sources', 'plc3')
+
         for i, action in action_dict.items():
-            (
-                self.last_obs[i],
-                self.last_rew[i],
-                self.last_terminated[i],
-                self.last_info[i],
-            ) = self.agents[i].step(action)
+            obs[i], rew[i], terminated[i], trunc[i], info[i] = self.agents[i].step(action)
+            if terminated[i]:
+                self.terminateds.add(i)
 
-        obs = {self.i: self.last_obs[self.i]}
-        rew = {self.i: self.last_rew[self.i]}
-        terminated = {self.i: self.last_terminated[self.i]}
-        truncated = {self.i: False}
-        info = {self.i: self.last_info[self.i]}
+            if trunc[i]:
+                self.truncateds.add(i)
 
-        if terminated[self.i]:
-            rew[self.i] = 1
-            self.terminateds.add(self.i)
-        self.i = (self.i + 1) % self.num
         terminated["__all__"] = len(self.terminateds) == len(self.agents)
-        truncated["__all__"] = len(self.truncateds) == len(self.agents)
-        return obs, rew, terminated, truncated, info
+        trunc["__all__"] = len(self.truncateds) == len(self.agents)
+
+        return obs, rew, terminated, trunc, info
     
     def render(self, mode='human'):
         print('Rendering the environment')
 
     def cli(self):
         CLI(self.swat_s1_cps.net)
+
+    def is_attack_time(self):
+        self.operation_count += 1
+        if self.operation_count >= 200 and not self.attacked:
+            self.attacked = True
+            return True
+        return False
+    
+    def generate_tcp_traffic(self, source_host, target_ip):
+        """Generate continuous normal TCP traffic from a source host to a target IP."""
+        source = self.swat_s1_cps.net.get(source_host)
+        # Run hping3 command in the background to generate continuous TCP traffic
+        # Removing the '-c' option sends packets indefinitely
+        source.cmd(f'hping3 {target_ip} > /tmp/{source_host}_hping3.log 2>&1 &')
+        print(f'Continuous TCP traffic generation started from {source_host} to {target_ip}')
+
+    def generate_dos_attack(self, source_host, target_ip):
+        """Generate continuous high TCP traffic from a source host to a target IP."""
+        source = self.swat_s1_cps.net.get(source_host)
+        # Run hping3 command in the background to generate continuous TCP traffic
+        # The --flood option sends packets as fast as possible
+        # The --rand-source option uses random source addresses
+        source.cmd(f'hping3 -1 --flood --rand-source -q --interval u10000 {target_ip} > /tmp/{source_host}_hping3.log 2>&1 &')
+        print(f'High TCP traffic generation started from {source_host} to {target_ip}')
+
+    def stop_dos_attack(self, source_host):
+        """Stop the DoS attack from a source host."""
+        source = self.swat_s1_cps.net.get(source_host)
+        # Kill the hping3 command running in the background
+        source.cmd('pkill hping3')
+        print(f'DoS attack stopped from {source_host}')
+
+    def setup_traffic(self):
+        # Example setup calls
+        plc1_ip = self.swat_s1_cps.net.get('plc1').IP()  # Assuming plc1 is a host in the network
+        plc2_ip = self.swat_s1_cps.net.get('plc2').IP()
+        plc3_ip = self.swat_s1_cps.net.get('plc3').IP()
+
+        self.generate_tcp_traffic('sources', plc1_ip)
+        self.generate_tcp_traffic('sources', plc2_ip)
+        self.generate_tcp_traffic('sources', plc3_ip)
+
+
+    metadata = {
+        "render.modes": ["rgb_array"],
+    }
+
+
+    

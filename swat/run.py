@@ -17,7 +17,13 @@ class SwatS1CPS(MiniCPS):
 
     """Main container used to run the simulation."""
 
-    def __init__(self, name, net):
+    def __init__(self, name):
+
+        self.controller = RemoteController(name='ryu', ip='127.0.0.1', port=5555)
+
+        # Initialize the Mininet network
+        self.TOPO = SwatTopo()
+        net = Mininet(topo=self.TOPO, controller=self.controller)
 
         self.name = name
         self.net = net
@@ -27,20 +33,16 @@ class SwatS1CPS(MiniCPS):
         # net.pingAll()
 
         # start devices
-        plc1, plc2, plc3, s1 = self.net.get(
-            'plc1', 'plc2', 'plc3', 's1')
+        plc1, plc2, plc3, s1, attacker = self.net.get(
+            'plc1', 'plc2', 'plc3', 's1', 'attacker')
 
         # SPHINX_SWAT_TUTORIAL RUN(
-        plc2.cmd(sys.executable + ' -u ' +' plc2.py &> logs/plc2.log &')
-        plc3.cmd(sys.executable + ' -u ' + ' plc3.py  &> logs/plc3.log &')
-        plc1.cmd(sys.executable + ' -u ' + ' plc1.py  &> logs/plc1.log &')
-        s1.cmd(sys.executable + ' -u ' + ' physical_process.py  &> logs/process.log &')
+        plc2.cmd(sys.executable + ' -u ' +'rl_envs/rl_envs/envs/plc2.py &> logs/plc2.log &')
+        plc3.cmd(sys.executable + ' -u ' + 'rl_envs/rl_envs/envs/plc3.py  &> logs/plc3.log &')
+        plc1.cmd(sys.executable + ' -u ' + 'rl_envs/rl_envs/envs/plc1.py  &> logs/plc1.log &')
+        s1.cmd(sys.executable + ' -u ' + 'rl_envs/rl_envs/envs/physical_process.py  &> logs/process.log &')
         # SPHINX_SWAT_TUTORIAL RUN)
         # CLI(self.net)
-
-        plc1.cmd('tc qdisc add dev %s-eth0 root handle 1: htb default 12' % 'plc1')
-        plc2.cmd('tc qdisc add dev %s-eth0 root handle 1: htb default 12' % 'plc2')
-        plc3.cmd('tc qdisc add dev %s-eth0 root handle 1: htb default 12' % 'plc3')
 
         s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=1,actions=output:2,3,4,5')
         s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=2,actions=output:1,3,4,5')
@@ -53,6 +55,7 @@ class SwatS1CPS(MiniCPS):
         s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=3,actions=output:1,2,4,5')
         s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=4,actions=output:1,2,3,5')
         s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=5,actions=output:1,2,3,4')
+
 
     def reset(self):
         self.net.stop()

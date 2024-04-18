@@ -7,15 +7,23 @@ import ray
 from ray.rllib.algorithms.dqn.dqn import DQNConfig
 import shutil
 from ray import tune, air
+from swat.topo import SwatTopo
+from swat.run import SwatS1CPS
+from mininet.node import RemoteController
+from mininet.net import Mininet
+
+from physical.run import PhysicalTestbed
 
 def create_env(env_config={}):
-    return MultiAgentSwatEnv()
+    # env = SwatS1CPS('swat_s1')
+    env = PhysicalTestbed('physical')
+    return MultiAgentSwatEnv(env)
 
 def create_single_env(env_config={}):
     return SwatEnv(30)
 
 def main():
-    # env = create_single_env()
+    # env = create_env()
 
     # env.cli()
     checkpoint_root = "tmp/ppo/mininet_env"
@@ -25,7 +33,7 @@ def main():
     shutil.rmtree(ray_results, ignore_errors=True, onerror=None)
 
     ray.init(ignore_reinit_error=True)
-    tune.register_env("swat_env-v0", create_single_env)
+    tune.register_env("swat_env-v0", create_env)
 
     config = DQNConfig()
     config = config.training(num_atoms=tune.grid_search([1,]))

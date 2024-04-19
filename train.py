@@ -20,7 +20,7 @@ def create_env(env_config={}):
     return MultiAgentSwatEnv(env)
 
 def create_single_env(env_config={}):
-    return SwatEnv(30)
+    return SwatEnv(10)
 
 def main():
     # env = create_env()
@@ -33,7 +33,7 @@ def main():
     shutil.rmtree(ray_results, ignore_errors=True, onerror=None)
 
     ray.init(ignore_reinit_error=True)
-    tune.register_env("swat_env-v0", create_env)
+    tune.register_env("swat_env-v0", create_single_env)
 
     config = DQNConfig()
     config = config.training(num_atoms=tune.grid_search([1,]))

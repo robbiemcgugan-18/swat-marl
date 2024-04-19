@@ -192,7 +192,7 @@ class SingleAgentSwatEnv(gym.Env):
 
         latency_penalty = 0
         # Latency check
-        agents_numbers = [1,2]
+        agents_numbers = [1,2,3]
         agents_numbers.remove(self.agent_id)
         host1 = self.env.net.get(f'plc{self.agent_id}')
         host2 = self.env.net.get(f'plc{np.random.choice(agents_numbers)}')
@@ -240,7 +240,7 @@ class SingleAgentSwatEnv(gym.Env):
 
         s1.cmd('ovs-ofctl add-flow s1 priority=400,in_port=1,dl_type=0x0800,nw_proto=1,actions=normal')
         s1.cmd('ovs-ofctl add-flow s1 priority=400,in_port=2,dl_type=0x0800,nw_proto=1,actions=normal')
-        # s1.cmd('ovs-ofctl add-flow s1 priority=400,in_port=3,dl_type=0x0800,nw_proto=1,actions=normal')
+        s1.cmd('ovs-ofctl add-flow s1 priority=400,in_port=3,dl_type=0x0800,nw_proto=1,actions=normal')
 
         s1.cmd('ovs-ofctl add-flow s1 priority=300,dl_type=0x0800,nw_proto=1,actions=drop')
         
@@ -256,7 +256,7 @@ class SingleAgentSwatEnv(gym.Env):
 
         s1.cmd('ovs-ofctl add-flow s1 priority=500,in_port=1,dl_type=0x0800,nw_proto=6,tp_dst=502,actions=normal')
         s1.cmd('ovs-ofctl add-flow s1 priority=500,in_port=2,dl_type=0x0800,nw_proto=6,tp_dst=502,actions=normal')
-        # s1.cmd('ovs-ofctl add-flow s1 priority=500,in_port=3,dl_type=0x0800,nw_proto=6,tp_dst=502,actions=normal')
+        s1.cmd('ovs-ofctl add-flow s1 priority=500,in_port=3,dl_type=0x0800,nw_proto=6,tp_dst=502,actions=normal')
         
         # New rule to block all Modbus TCP traffic
         s1.cmd('ovs-ofctl add-flow s1 priority=300,dl_type=0x0800,nw_proto=6,tp_dst=502,actions=drop')
@@ -273,7 +273,7 @@ class SingleAgentSwatEnv(gym.Env):
         
         s1.cmd('ovs-ofctl add-flow s1 priority=500,in_port=1,dl_type=0x0800,nw_proto=17,actions=normal')
         s1.cmd('ovs-ofctl add-flow s1 priority=500,in_port=2,dl_type=0x0800,nw_proto=17,actions=normal')
-        # s1.cmd('ovs-ofctl add-flow s1 priority=500,in_port=3,dl_type=0x0800,nw_proto=17,actions=normal')
+        s1.cmd('ovs-ofctl add-flow s1 priority=500,in_port=3,dl_type=0x0800,nw_proto=17,actions=normal')
 
         # New rule to block all UDP traffic
         s1.cmd('ovs-ofctl add-flow s1 priority=300,dl_type=0x0800,nw_proto=17,actions=drop')

@@ -27,7 +27,7 @@ class MultiAgentSwatEnv(MultiAgentEnv):
         print("STARTING MULTI AGENT SWAT ENVIRONMENT")
         self.env = env #SwatS1CPS(name='swat_s1')
 
-        self.agents = [SingleAgentSwatEnv(self.env, i, 30) for i in range(1,3)]
+        self.agents = [SingleAgentSwatEnv(self.env, i, 10) for i in range(1,4)]
 
         self._agent_ids = set(range(3))
         self.terminateds = set()
@@ -49,7 +49,7 @@ class MultiAgentSwatEnv(MultiAgentEnv):
             print("Evaluating the environment")
             self.generate_dos_attack('attacker', 'plc1')
             self.generate_dos_attack('attacker', 'plc2')
-            # self.generate_dos_attack('attacker', 'plc3')
+            self.generate_dos_attack('attacker', 'plc3')
 
     def reset(self, *, seed=None, options=None):
         
@@ -65,36 +65,36 @@ class MultiAgentSwatEnv(MultiAgentEnv):
         s1 = self.env.net.get('s1')
         s1.dpctl('del-flows')
 
-        # s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=1,actions=output:2,3,4,5')
-        # s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=2,actions=output:1,3,4,5')
-        # s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=3,actions=output:1,2,4,5')
-        # s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=4,actions=output:1,2,3,5')
-        # s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=5,actions=output:1,2,3,4')
+        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=1,actions=output:2,3,4,5')
+        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=2,actions=output:1,3,4,5')
+        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=3,actions=output:1,2,4,5')
+        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=4,actions=output:1,2,3,5')
+        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=5,actions=output:1,2,3,4')
 
-        # s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=1,actions=output:2,3,4,5')
-        # s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=2,actions=output:1,3,4,5')
-        # s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=3,actions=output:1,2,4,5')
-        # s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=4,actions=output:1,2,3,5')
-        # s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=5,actions=output:1,2,3,4')
+        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=1,actions=output:2,3,4,5')
+        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=2,actions=output:1,3,4,5')
+        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=3,actions=output:1,2,4,5')
+        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=4,actions=output:1,2,3,5')
+        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=5,actions=output:1,2,3,4')
 
-        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=1,actions=output:2,3,4')
-        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=2,actions=output:1,3,4')
-        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=3,actions=output:1,2,4')
-        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=4,actions=output:1,2,3')
+        # s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=1,actions=output:2,3,4')
+        # s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=2,actions=output:1,3,4')
+        # s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=3,actions=output:1,2,4')
+        # s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=4,actions=output:1,2,3')
 
-        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=1,actions=output:2,3,4')
-        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=2,actions=output:1,3,4')
-        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=3,actions=output:1,2,4')
-        s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=4,actions=output:1,2,3')
+        # s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=1,actions=output:2,3,4')
+        # s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=2,actions=output:1,3,4')
+        # s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=3,actions=output:1,2,4')
+        # s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=4,actions=output:1,2,3')
 
         return {i: a.reset() for i, a in enumerate(self.agents)}, self.info_dict
 
     def step(self, action_dict):
         obs, rew, terminated, trunc, info = {}, {}, {}, {}, {}
 
-        if self.is_attack_time():
-            self.generate_dos_attack('attacker', 'plc1')
-            self.generate_dos_attack('attacker', 'plc2')
+        # if self.is_attack_time():
+        #     self.generate_dos_attack('attacker', 'plc1')
+        #     self.generate_dos_attack('attacker', 'plc2')
             # self.generate_dos_attack('attacker', 'plc3')
 
         for i, action in action_dict.items():
@@ -152,11 +152,11 @@ class MultiAgentSwatEnv(MultiAgentEnv):
         # Example setup calls
         plc1_ip = self.env.net.get('plc1').IP()  # Assuming plc1 is a host in the network
         plc2_ip = self.env.net.get('plc2').IP()
-        # plc3_ip = self.env.net.get('plc3').IP()
+        plc3_ip = self.env.net.get('plc3').IP()
 
         self.generate_tcp_traffic('sources', plc1_ip)
         self.generate_tcp_traffic('sources', plc2_ip)
-        # self.generate_tcp_traffic('sources', plc3_ip)
+        self.generate_tcp_traffic('sources', plc3_ip)
 
 
     metadata = {

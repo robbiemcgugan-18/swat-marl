@@ -4,6 +4,7 @@ swat-s1 topology
 
 from mininet.topo import Topo
 from mininet.link import TCLink
+from mininet.node import Intf
 
 
 IP = {
@@ -29,18 +30,6 @@ class PhysicalTopo(Topo):
 
         switch = self.addSwitch('s1')
 
-        plc1 = self.addHost(
-            'plc1',
-            ip=IP['plc1'] + NETMASK,
-            mac=MAC['plc1'])
-        self.addLink(plc1, switch, cls=TCLink, bw=10)
-
-        plc2 = self.addHost(
-            'plc2',
-            ip=IP['plc2'] + NETMASK,
-            mac=MAC['plc2'])
-        self.addLink(plc2, switch, cls=TCLink, bw=10)
-
         attacker = self.addHost(
             'attacker',
             ip=IP['attacker'] + NETMASK,
@@ -52,3 +41,6 @@ class PhysicalTopo(Topo):
             ip=IP['sources'] + NETMASK,
             mac=MAC['sources'])
         self.addLink(sources, switch)
+
+        intfName = 'br0'
+        intf = Intf(intfName, node=switch)

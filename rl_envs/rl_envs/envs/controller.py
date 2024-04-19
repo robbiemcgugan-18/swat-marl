@@ -21,7 +21,7 @@ def get_network_stats(port_no):
     local_stats = {
         'port': network_stats['ports'].get(port_no, {}),
         'flow': aggregate_flow_stats({k: v for k, v in network_stats['flows'].items() if str(port_no) in str(k)}),
-        # 'queues': network_stats['queues'].get(port_no, {}),
+        'queues': network_stats['queues'].get(port_no, {}),
         'window': network_stats['port_packet_window'].get(port_no, {})
     }
 
@@ -30,7 +30,7 @@ def get_network_stats(port_no):
         'port': aggregate_port_stats({k: v for k, v in network_stats['ports'].items() if str(port_no) not in str(k)}),
         'flow': aggregate_flow_stats({k: v for k, v in network_stats['flows'].items() if str(port_no) not in str(k)}),
         'tables': aggregate_table_stats(network_stats['tables']),
-        # 'queues': aggregate_queue_stats({k: v for k, v in network_stats['queues'].items() if str(port_no) not in str(k)}),
+        'queues': aggregate_queue_stats({k: v for k, v in network_stats['queues'].items() if str(port_no) not in str(k)}),
         'window': aggregate_window_stats({k: v for k, v in network_stats['port_packet_window'].items() if str(port_no) not in str(k)})
     }
 
@@ -87,9 +87,6 @@ def aggregate_table_stats(table_stats):
     return aggregated_stats
 
 def aggregate_queue_stats(queue_stats):
-    # Aggregate queue stats here
-    # Assuming queue_stats is a dictionary of dictionaries
-    # If not, you may need to adjust this
     aggregated_stats = {k: np.mean([v[k] for v in queue_stats.values()]) for k in queue_stats.values()[0]}
     return aggregated_stats
 

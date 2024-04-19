@@ -5,6 +5,8 @@ from mininet.node import OVSController, RemoteController
 
 from swat.topo import SwatTopo
 from swat.run import SwatS1CPS
+from physical.topo import PhysicalTopo
+from physical.run import PhysicalTestbed
 
 import gymnasium as gym
 from mininet.cli import CLI
@@ -18,15 +20,11 @@ import json
 
 class SwatEnv(gym.Env):
 
-    def __init__(self, episode_length, epsilon_start=1.0, epsilon_decay=0.99, epsilon_min=0.01):
+    def __init__(self, episode_length, epsilon_start=1.0, epsilon_decay=0.99, epsilon_min=0.01, evaluate=False):
 
         print("STARTING SWAT ENVIRONMENT")
-        self.controller = RemoteController(name='ryu', ip='127.0.0.1', port=5555)
 
-        # Initialize the Mininet network
-        TOPO =SwatTopo()
-        NET = Mininet(topo=TOPO, controller=self.controller)
-        self.swat_s1_cps = SwatS1CPS(name='swat_s1', net=NET)
+        self.env = PhysicalTestbed(name='physical')
 
         # Define the observation space with an arbitrary high and low limit for simplicity
         low_limits = np.full((17,), -np.inf)  # Assuming negative values are not expected, but setting to -inf for generalization
@@ -44,6 +42,11 @@ class SwatEnv(gym.Env):
         self.setup_traffic()
         self.reset()
 
+        if evaluate:
+            self.generate_dos_attack('attacker', 'plc1')
+            self.generate_dos_attack('attacker', 'plc2')
+            self.generate_dos_attack('attacker', 'plc3')
+
     def reset(self, *, seed=None, options=None):
         if self.attacked:
             self.stop_dos_attack('attacker')
@@ -56,7 +59,7 @@ class SwatEnv(gym.Env):
         self.operation_count = 0
         self.i = 0
 
-        s1 = self.swat_s1_cps.net.get('s1')
+        s1 = self.env.net.get('s1')
         s1.dpctl('del-flows')
 
         s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=1,actions=output:2,3,4,5')
@@ -70,6 +73,16 @@ class SwatEnv(gym.Env):
         s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=3,actions=output:1,2,4,5')
         s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=4,actions=output:1,2,3,5')
         s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=5,actions=output:1,2,3,4')
+
+        # s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=1,actions=output:2,3,4')
+        # s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=2,actions=output:1,3,4')
+        # s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=3,actions=output:1,2,4')
+        # s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,ip,in_port=4,actions=output:1,2,3')
+
+        # s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=1,actions=output:2,3,4')
+        # s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=2,actions=output:1,3,4')
+        # s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=3,actions=output:1,2,4')
+        # s1.cmd('ovs-ofctl --protocols=OpenFlow13 add-flow s1 priority=10,arp,in_port=4,actions=output:1,2,3')
 
         response = requests.get(f'http://localhost:5000/network/global_stats')
         # # The response from the server is a string, so we need to convert it to a Python object
@@ -142,10 +155,10 @@ class SwatEnv(gym.Env):
 
         self.reward = self.calculate_reward(data)
 
-        if self.is_attack_time():
-            self.generate_dos_attack('attacker', 'plc1')
-            self.generate_dos_attack('attacker', 'plc2')
-            self.generate_dos_attack('attacker', 'plc3')
+        # if self.is_attack_time():
+        #     self.generate_dos_attack('attacker', 'plc1')
+        #     self.generate_dos_attack('attacker', 'plc2')
+            # self.generate_dos_attack('attacker', 'plc3')
 
 
         if self.i >= self.episode_length:
@@ -160,7 +173,7 @@ class SwatEnv(gym.Env):
         print('Rendering the environment')
 
     def cli(self):
-        CLI(self.swat_s1_cps.net)
+        CLI(self.env.net)
 
 
     def calculate_reward(self, observation):
@@ -188,13 +201,13 @@ class SwatEnv(gym.Env):
             error_penalty += ERROR_PENALTY
 
         # Latency check
-        agents_numbers = [1,2,3]
+        agents_numbers = [1,2]
         number1 = np.random.choice(agents_numbers)
         agents_numbers.remove(number1)
         number2 = np.random.choice(agents_numbers)
-        host1 = self.swat_s1_cps.net.get(f'plc{number1}')
-        host2 = self.swat_s1_cps.net.get(f'plc{number2}')
-        result = self.swat_s1_cps.net.ping([host1, host2], timeout='0.1')
+        host1 = self.env.net.get(f'plc{number1}')
+        host2 = self.env.net.get(f'plc{number2}')
+        result = self.env.net.ping([host1, host2], timeout='0.1')
         current_latency = result  # Simulated function
 
         latency_penalty = 0
@@ -208,7 +221,7 @@ class SwatEnv(gym.Env):
 
         # Total reward calculation
         print(byte_count_penalty, packet_count_penalty, error_penalty, latency_penalty)
-        reward = 300 - byte_count_penalty - packet_count_penalty - error_penalty - latency_penalty
+        reward = 100 - byte_count_penalty - packet_count_penalty - error_penalty - latency_penalty
         return reward
 
     def flatten_observation(self, obs_dict):
@@ -230,7 +243,7 @@ class SwatEnv(gym.Env):
         return np.array(flat_obs, dtype=np.float32)  # Convert list to a NumPy array for consistency
     
     def blockICMP(self):
-        s1 = self.swat_s1_cps.net.get('s1')
+        s1 = self.env.net.get('s1')
 
         s1.cmd('ovs-ofctl add-flow s1 priority=400,in_port=1,dl_type=0x0800,nw_proto=1,actions=normal')
         s1.cmd('ovs-ofctl add-flow s1 priority=400,in_port=2,dl_type=0x0800,nw_proto=1,actions=normal')
@@ -239,14 +252,14 @@ class SwatEnv(gym.Env):
         s1.cmd('ovs-ofctl add-flow s1 priority=300,dl_type=0x0800,nw_proto=1,actions=drop')
         
     def unblockICMP(self):
-        s1 = self.swat_s1_cps.net.get('s1')
+        s1 = self.env.net.get('s1')
 
         # Removing the drop rule for ICMP traffic
         s1.cmd('ovs-ofctl del-flows s1 dl_type=0x0800,nw_proto=1')
 
 
     def blockModbus(self):
-        s1 = self.swat_s1_cps.net.get('s1')
+        s1 = self.env.net.get('s1')
 
         s1.cmd('ovs-ofctl add-flow s1 priority=500,in_port=1,dl_type=0x0800,nw_proto=6,tp_dst=502,actions=normal')
         s1.cmd('ovs-ofctl add-flow s1 priority=500,in_port=2,dl_type=0x0800,nw_proto=6,tp_dst=502,actions=normal')
@@ -256,14 +269,14 @@ class SwatEnv(gym.Env):
         s1.cmd('ovs-ofctl add-flow s1 priority=300,dl_type=0x0800,nw_proto=6,tp_dst=502,actions=drop')
 
     def unblockModbus(self):
-        s1 = self.swat_s1_cps.net.get('s1')
+        s1 = self.env.net.get('s1')
 
         # Removing the drop rule for Modbus TCP traffic
         s1.cmd('ovs-ofctl del-flows s1 dl_type=0x0800,nw_proto=6,tp_dst=502')
 
 
     def blockUDP(self):
-        s1 = self.swat_s1_cps.net.get('s1')
+        s1 = self.env.net.get('s1')
         
         s1.cmd('ovs-ofctl add-flow s1 priority=500,in_port=1,dl_type=0x0800,nw_proto=17,actions=normal')
         s1.cmd('ovs-ofctl add-flow s1 priority=500,in_port=2,dl_type=0x0800,nw_proto=17,actions=normal')
@@ -273,13 +286,13 @@ class SwatEnv(gym.Env):
         s1.cmd('ovs-ofctl add-flow s1 priority=300,dl_type=0x0800,nw_proto=17,actions=drop')
 
     def unblockUDP(self):
-        s1 = self.swat_s1_cps.net.get('s1')
+        s1 = self.env.net.get('s1')
 
         # Removing the drop rule for UDP traffic
         s1.cmd('ovs-ofctl del-flows s1 dl_type=0x0800,nw_proto=17')
 
     def cleanup_icmp(self):
-        s1 = self.swat_s1_cps.net.get('s1')
+        s1 = self.env.net.get('s1')
 
         # Assuming meter ids 1, 2, and 3 are used for ICMP rate limiting
         for meter_id in [1, 2, 3]:
@@ -287,34 +300,34 @@ class SwatEnv(gym.Env):
 
     def set_rate_icmp(self, rate_kbps):
         self.cleanup_icmp()
-        s1 = self.swat_s1_cps.net.get('s1')
+        s1 = self.env.net.get('s1')
         s1.cmd(f'ovs-ofctl -O Openflow13 add-meter s1 meter=1,kbps,band=type=drop,rate={rate_kbps}')
         s1.cmd('ovs-ofctl add-flow s1 priority=500,dl_type=0x0800,nw_proto=1,actions=meter:1')
 
     def cleanup_udp(self):
-        s1 = self.swat_s1_cps.net.get('s1')
+        s1 = self.env.net.get('s1')
         for meter_id in [4, 5, 6]:  # Assuming meter ids 4, 5, and 6 are used for UDP rate limiting
             s1.cmd(f'ovs-ofctl -O Openflow13 del-meter s1 meter={meter_id}')
 
     def set_rate_udp(self, rate_kbps):
         self.cleanup_udp()
-        s1 = self.swat_s1_cps.net.get('s1')
+        s1 = self.env.net.get('s1')
         s1.cmd(f'ovs-ofctl -O Openflow13 add-meter s1 meter=2,kbps,band=type=drop,rate={rate_kbps}')
         s1.cmd('ovs-ofctl add-flow s1 priority=500,dl_type=0x0800,nw_proto=17,actions=meter:2')
 
     def cleanup_modbus(self):
-        s1 = self.swat_s1_cps.net.get('s1')
+        s1 = self.env.net.get('s1')
         for meter_id in [7, 8, 9]:  # Assuming meter ids 7, 8, and 9 are used for Modbus rate limiting
             s1.cmd(f'ovs-ofctl -O Openflow13 del-meter s1 meter={meter_id}')
 
     def set_rate_modbus(self, rate_kbps):
         self.cleanup_modbus()
-        s1 = self.swat_s1_cps.net.get('s1')
+        s1 = self.env.net.get('s1')
         s1.cmd(f'ovs-ofctl -O Openflow13 add-meter s1 meter=3,kbps,band=type=drop,rate={rate_kbps}')
         s1.cmd('ovs-ofctl add-flow s1 priority=500,dl_type=0x0800,nw_proto=6,tp_dst=502,actions=meter:3')
 
     def limit_new_connections(self, max_connections, time_window):
-        s1 = self.swat_s1_cps.net.get('s1')
+        s1 = self.env.net.get('s1')
         s1.cmd('ovs-ofctl del-flows s1 dl_type=0x0800,nw_proto=6,tcp_flags=0x002')
 
         conjunction_id = hash(f"{max_connections}_{time_window}") % 10000
@@ -325,17 +338,17 @@ class SwatEnv(gym.Env):
         s1.cmd(f'ovs-ofctl -O OpenFlow13 add-flow s1 priority=700,conjunction_id={conjunction_id},action=normal')
 
     def prioritize_udp(self):
-        s1 = self.swat_s1_cps.net.get('s1')
+        s1 = self.env.net.get('s1')
         # Prioritize UDP traffic to a specific service port
         s1.cmd('ovs-ofctl add-flow s1 priority=900,dl_type=0x0800,nw_proto=17,actions=normal')
 
     def prioritize_tcp(self):
-        s1 = self.swat_s1_cps.net.get('s1')
+        s1 = self.env.net.get('s1')
         # Prioritize TCP traffic to a specific service port
         s1.cmd('ovs-ofctl add-flow s1 priority=900,dl_type=0x0800,nw_proto=6,actions=normal')
 
     def prioritize_modbus_tcp(self):
-        s1 = self.swat_s1_cps.net.get('s1')
+        s1 = self.env.net.get('s1')
         # Modbus TCP typically uses port 502, specify if different
         modbus_port = 502
         # Prioritize Modbus TCP traffic
@@ -357,7 +370,7 @@ class SwatEnv(gym.Env):
     
     def generate_tcp_traffic(self, source_host, target_ip):
         """Generate continuous normal TCP traffic from a source host to a target IP."""
-        source = self.swat_s1_cps.net.get(source_host)
+        source = self.env.net.get(source_host)
         # Run hping3 command in the background to generate continuous TCP traffic
         # Removing the '-c' option sends packets indefinitely
         source.cmd(sys.executable + ' -u ' + f'rl_envs/rl_envs/envs/traffic.py {target_ip} &')
@@ -365,16 +378,16 @@ class SwatEnv(gym.Env):
 
     def generate_dos_attack(self, source_host, target):
         """Generate continuous high TCP traffic from a source host to a target IP."""
-        source = self.swat_s1_cps.net.get(source_host)
-        target_ip = self.swat_s1_cps.net.get(target).IP()
+        source = self.env.net.get(source_host)
+        target_ip = self.env.net.get(target).IP()
         # source.cmd(sys.executable + ' -u ' + f'rl_envs/rl_envs/envs/dos.py {target_ip} &')
-        source.cmd(f'hping3 -1 --flood --rand-source -q --interval u1000 {target_ip} > /tmp/{source_host}_hping3.log 2>&1 &')
+        source.cmd(f'hping3 -1 --flood --rand-source -q --interval u100000 {target_ip} > /tmp/{source_host}_hping3.log 2>&1 &')
         print(f'High TCP traffic generation started from {source_host} to {target_ip}')
 
 
     def stop_dos_attack(self, source_host):
         """Stop the DoS attack from a source host."""
-        source = self.swat_s1_cps.net.get(source_host)
+        source = self.env.net.get(source_host)
         # Kill the Python command running the dos.py script in the background
         source.cmd('pkill -f "python.*dos.py"')
         source.cmd('pkill -f "hping3.*"')
@@ -382,9 +395,9 @@ class SwatEnv(gym.Env):
 
     def setup_traffic(self):
         # Example setup calls
-        plc1_ip = self.swat_s1_cps.net.get('plc1').IP()  # Assuming plc1 is a host in the network
-        plc2_ip = self.swat_s1_cps.net.get('plc2').IP()
-        plc3_ip = self.swat_s1_cps.net.get('plc3').IP()
+        plc1_ip = self.env.net.get('plc1').IP()  # Assuming plc1 is a host in the network
+        plc2_ip = self.env.net.get('plc2').IP()
+        plc3_ip = self.env.net.get('plc3').IP()
 
         self.generate_tcp_traffic('sources', plc1_ip)
         self.generate_tcp_traffic('sources', plc2_ip)

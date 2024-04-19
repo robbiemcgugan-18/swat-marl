@@ -61,6 +61,11 @@ class SingleAgentSwatEnv(gym.Env):
         # # The response from the server is a string, so we need to convert it to a Python object
         data = json.loads(response.text)
 
+        host1 = self.env.net.get(f'plc{self.agent_id}')
+        host2 = self.env.net.get(f'plc2')
+        result = self.env.net.ping([host1, host2], timeout='0.1')
+        data["latency"] = result 
+
         observation = self.flatten_observation(data)
 
         return observation
@@ -129,6 +134,11 @@ class SingleAgentSwatEnv(gym.Env):
 
         observation = self.flatten_observation(data)
 
+        host1 = self.env.net.get(f'plc{self.agent_id}')
+        host2 = self.env.net.get(f'plc2')
+        result = self.env.net.ping([host1, host2], timeout='0.1')
+        data["latency"] = result 
+
 
         self.reward = self.calculate_reward(data)
 
@@ -167,6 +177,10 @@ class SingleAgentSwatEnv(gym.Env):
         LOCAL_ERROR_PENALTY = 5  # Higher penalty for local errors
         TABLE_LOOKUP_THRESHOLD = 10000000
         TABLE_LOOKUP_PENALTY_WEIGHT = 0.00001
+        QUEUE_BYTE_COUNT_THRESHOLD = 10000000
+        QUEUE_BYTE_COUNT_PENALTY_WEIGHT = 0.00001
+        WINDOW_AVERAGE_THRESHOLD = 100
+        WINDOW_AVERAGE_PENALTY_WEIGHT = 0.01
 
         # Extract metrics
         global_stats = observation['global']
@@ -192,7 +206,7 @@ class SingleAgentSwatEnv(gym.Env):
 
         latency_penalty = 0
         # Latency check
-        agents_numbers = [1,2]
+        agents_numbers = [1,2,3]
         agents_numbers.remove(self.agent_id)
         host1 = self.env.net.get(f'plc{self.agent_id}')
         host2 = self.env.net.get(f'plc{np.random.choice(agents_numbers)}')
@@ -204,14 +218,27 @@ class SingleAgentSwatEnv(gym.Env):
             latency_penalty -= 5
 
         # Table lookup efficiency
-        # lookup_count_penalty = 0
-        # if global_stats['tables']['lookup_count'] > TABLE_LOOKUP_THRESHOLD:
-        #     excess_lookups = global_stats['tables']['lookup_count'] - TABLE_LOOKUP_THRESHOLD
-        #     lookup_count_penalty = excess_lookups * TABLE_LOOKUP_PENALTY_WEIGHT
+        lookup_count_penalty = 0
+        if global_stats['tables']['lookup_count'] > TABLE_LOOKUP_THRESHOLD:
+            excess_lookups = global_stats['tables']['lookup_count'] - TABLE_LOOKUP_THRESHOLD
+            lookup_count_penalty = excess_lookups * TABLE_LOOKUP_PENALTY_WEIGHT
+
+        # Queue byte count penalty
+        queue_byte_count_penalty = 0
+        if global_stats['queue']['byte_count'] > QUEUE_BYTE_COUNT_THRESHOLD:
+            excess_queue_byte_count = global_stats['queue']['byte_count'] - QUEUE_BYTE_COUNT_THRESHOLD
+            queue_byte_count_penalty = excess_queue_byte_count * QUEUE_BYTE_COUNT_PENALTY_WEIGHT
+
+        # Window average penalty
+        window_average_penalty = 0
+        if local_stats['window']['average'] < WINDOW_AVERAGE_THRESHOLD:
+            window_average_deficit = WINDOW_AVERAGE_THRESHOLD - local_stats['window']['average']
+            window_average_penalty = window_average_deficit * WINDOW_AVERAGE_PENALTY_WEIGHT
+
 
         # Total reward calculation
         print(byte_count_penalty, packet_count_penalty, error_penalty, latency_penalty)
-        reward = 100 - byte_count_penalty - packet_count_penalty - error_penalty - latency_penalty
+        reward = 100 - byte_count_penalty - packet_count_penalty - error_penalty - latency_penalty - lookup_count_penalty - queue_byte_count_penalty - window_average_penalty
         return reward
 
     def flatten_observation(self, obs_dict):
@@ -240,7 +267,7 @@ class SingleAgentSwatEnv(gym.Env):
 
         s1.cmd('ovs-ofctl add-flow s1 priority=400,in_port=1,dl_type=0x0800,nw_proto=1,actions=normal')
         s1.cmd('ovs-ofctl add-flow s1 priority=400,in_port=2,dl_type=0x0800,nw_proto=1,actions=normal')
-        # s1.cmd('ovs-ofctl add-flow s1 priority=400,in_port=3,dl_type=0x0800,nw_proto=1,actions=normal')
+        s1.cmd('ovs-ofctl add-flow s1 priority=400,in_port=3,dl_type=0x0800,nw_proto=1,actions=normal')
 
         s1.cmd('ovs-ofctl add-flow s1 priority=300,dl_type=0x0800,nw_proto=1,actions=drop')
         
@@ -256,7 +283,7 @@ class SingleAgentSwatEnv(gym.Env):
 
         s1.cmd('ovs-ofctl add-flow s1 priority=500,in_port=1,dl_type=0x0800,nw_proto=6,tp_dst=502,actions=normal')
         s1.cmd('ovs-ofctl add-flow s1 priority=500,in_port=2,dl_type=0x0800,nw_proto=6,tp_dst=502,actions=normal')
-        # s1.cmd('ovs-ofctl add-flow s1 priority=500,in_port=3,dl_type=0x0800,nw_proto=6,tp_dst=502,actions=normal')
+        s1.cmd('ovs-ofctl add-flow s1 priority=500,in_port=3,dl_type=0x0800,nw_proto=6,tp_dst=502,actions=normal')
         
         # New rule to block all Modbus TCP traffic
         s1.cmd('ovs-ofctl add-flow s1 priority=300,dl_type=0x0800,nw_proto=6,tp_dst=502,actions=drop')
@@ -273,7 +300,7 @@ class SingleAgentSwatEnv(gym.Env):
         
         s1.cmd('ovs-ofctl add-flow s1 priority=500,in_port=1,dl_type=0x0800,nw_proto=17,actions=normal')
         s1.cmd('ovs-ofctl add-flow s1 priority=500,in_port=2,dl_type=0x0800,nw_proto=17,actions=normal')
-        # s1.cmd('ovs-ofctl add-flow s1 priority=500,in_port=3,dl_type=0x0800,nw_proto=17,actions=normal')
+        s1.cmd('ovs-ofctl add-flow s1 priority=500,in_port=3,dl_type=0x0800,nw_proto=17,actions=normal')
 
         # New rule to block all UDP traffic
         s1.cmd('ovs-ofctl add-flow s1 priority=300,dl_type=0x0800,nw_proto=17,actions=drop')
